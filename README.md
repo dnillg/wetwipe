@@ -11,4 +11,10 @@ Came when I got together with my girlfriend and I notoriously forgot to close th
 - MG996R Servo
 - 5V 3A UBEC + 5-30V power supply
 
+## The Product
+
  ![The wet wipe dispenser](/assets/dispenser.jpg)
+
+## On Duty
+
+[![Youtube](https://img.youtube.com/vi/leVJIKeAmw0/0.jpg)](https://www.youtube.com/watch?v=leVJIKeAmw0)
