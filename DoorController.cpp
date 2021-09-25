@@ -28,20 +28,18 @@ void DoorController::tick(uint8_t elapsedMillis) {
 }
 
 void DoorController::addOpenTime(uint16_t durationMillis) {
-	if (doorOpenMillis == 0) {
-		openDoor();
-	}
+	openDoor();
 	this->doorOpenMillis += durationMillis;
 }
 
 void DoorController::openDoor() {
 	setDoorPosition(100);
-	this->doorBounceMillis = DOOR_BOUNCE_TIME_OFFSET_MILLIS;
+	//this->doorBounceMillis = DOOR_BOUNCE_TIME_OFFSET_MILLIS;
 }
 
 void DoorController::closeDoor() {
 	setDoorPosition(0);
-	this->doorBounceMillis = DOOR_BOUNCE_TIME_OFFSET_MILLIS;
+	//this->doorBounceMillis = DOOR_BOUNCE_TIME_OFFSET_MILLIS;
 }
 
 void DoorController::setDoorPosition(uint8_t posPercentage) {

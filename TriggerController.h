@@ -3,8 +3,13 @@
 
 #include <Arduino.h>
 #include <Adafruit_APDS9960.h>
+#include <Wire.h>
+#include "Adafruit_VCNL4010.h"
 
-#define RUNNING_AVERAGE_TICKS 100
+#define RUNNING_AVERAGE_TICKS 10
+
+#define PROXIMITY_TROLL 20000
+#define PROXIMITY_NORMAL 2800
 
 class TriggerController {
 private:
@@ -18,18 +23,17 @@ private:
 		bool isTriggered = false;
 		uint32_t cooldownMillis = 0;
 	};
-	uint8_t pinButton;
 	ColorData color;
 	Adafruit_APDS9960 apds;
-	uint32_t averageLightLevel = 0;
+	Adafruit_VCNL4010 vcnl;
+	uint32_t averageLightLevel = 50;
 	uint16_t lightLevelTreshold = 50;
 	TriggerData lightTrigger;
-	TriggerData buttonTrigger;
 	TriggerData proximityNormalTrigger;
 	TriggerData proximityTrollTrigger;
 	void reduceCooldown(TriggerData& triggerData, const uint16_t& value);
 public:
-	TriggerController(uint8_t pinButton);
+	TriggerController();
 	virtual ~TriggerController();
 	void tick(uint8_t elapsedMillis);
 	bool readDoorOpenTriggered();

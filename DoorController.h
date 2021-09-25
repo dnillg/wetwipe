@@ -4,8 +4,8 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-#define DOOR_SERVO_POS_CLOSED 10
-#define DOOR_SERVO_POS_OPEN 174
+#define DOOR_SERVO_POS_CLOSED 8
+#define DOOR_SERVO_POS_OPEN 175
 #define DOOR_BOUNCE_TIME_OFFSET_MILLIS 1000
 
 class DoorController {
