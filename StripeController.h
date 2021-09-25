@@ -2,7 +2,7 @@
 #define STRIPECONTROLLER_H_
 
 #include <Arduino.h>
-#include "ColorConverterLib.h"
+#include "lib/ColorConverterLib.h"
 #include <FastLED.h>
 
 class StripeController {

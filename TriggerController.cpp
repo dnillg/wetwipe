@@ -1,9 +1,11 @@
 #include "TriggerController.h"
 
 TriggerController::TriggerController() {
-	//this->apds.begin();
-	//this->apds.enableProximity(true);
-	//this->apds.enableColor(true);
+#ifdef SENSOR_ADPS
+	this->apds.begin();
+	this->apds.enableProximity(true);
+	this->apds.enableColor(true);
+#endif
 	this->vcnl.begin();
 	this->lightTrigger.cooldownMillis = 10000;
 }
@@ -17,8 +19,12 @@ void TriggerController::tick(uint8_t elapsedMillis) {
 	reduceCooldown(this->lightTrigger, elapsedMillis);
 
 	uint16_t prevLevel = this->averageLightLevel;
-	//this->apds.getColorData(&this->color.r, &this->color.g, &this->color.b, &this->color.v);
+#ifdef SENSOR_ADPS
+	this->apds.getColorData(&this->color.r, &this->color.g, &this->color.b, &this->color.v);
+#endif
+#ifdef SENSOR_VCNL
 	this->color.v = this->vcnl.readAmbient();
+#endif
 	adjustLightAverage(this->color.v);
 
 	if (this->averageLightLevel >= this->lightLevelTreshold
@@ -28,9 +34,12 @@ void TriggerController::tick(uint8_t elapsedMillis) {
 		this->lightTrigger.cooldownMillis = 2ul * 1000;
 	}
 
-	//uint16_t proximity = apds.readProximity();
+#ifdef SENSOR_ADPS
+	uint16_t proximity = apds.readProximity();
+#endif
+#ifdef SENSOR_VCNL
 	uint16_t proximity = vcnl.readProximity();
-	//Serial.println(proximity);
+#endif
 	if (proximity > PROXIMITY_NORMAL && this->proximityNormalTrigger.cooldownMillis == 0) {
 		Serial.println("Proximity Normal Triggered");
 		this->proximityNormalTrigger.isTriggered = true;

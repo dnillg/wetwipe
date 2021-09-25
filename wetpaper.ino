@@ -4,7 +4,6 @@
 #include <Adafruit_APDS9960.h>
 #include <FastLED.h>
 
-#include "FrequencyRegulator.h"
 #include "FrequencyController.h"
 #include "StripeController.h"
 #include "DoorController.h"
@@ -14,7 +13,7 @@
 
 typedef struct {
 	Servo* servo;
-	FrequencyController* frequencyRegulator;
+	FrequencyController* frequencyController;
 	StripeController* stripeController;
 	DoorController* doorController;
 	TriggerController* triggerController;
@@ -49,21 +48,21 @@ void setup() {
 	pinMode(PIN_SERVO_CONTROL, OUTPUT);
 	pinMode(PIN_SPEAKER, OUTPUT);
 
-	Serial.println("LedController...");
+	Serial.println("StripeController...");
 	context.stripeController = new StripeController(context.leds, NUM_LEDS);
 	Serial.println("DoorController...");
 	context.doorController = new DoorController(PIN_SERVO_CONTROL);
 	Serial.println("TriggerController...");
 	context.triggerController = new TriggerController();
 	Serial.println("FrequencyRegulator...");
-	context.frequencyRegulator = new FrequencyController(TARGET_FREQ);
+	context.frequencyController = new FrequencyController(TARGET_FREQ);
 	Serial.println("WelcomeSequence...");
 	playWelcomeSequence();
 	Serial.println("Ready!");
 }
 
 void loop() {
-	uint16_t lastTickMillis = context.frequencyRegulator->lastTickMillis();
+	uint16_t lastTickMillis = context.frequencyController->lastTickMillis();
 	context.stripeController->tick(lastTickMillis);
 	context.doorController->tick(lastTickMillis);
 	context.triggerController->tick(lastTickMillis);
@@ -87,6 +86,6 @@ void loop() {
 		context.stripeController->enableRainbow();
 	}
 
-	context.frequencyRegulator->waitForTick();
+	context.frequencyController->waitForTick();
 }
 

@@ -1,10 +1,16 @@
 #ifndef TRIGGERCONTROLLER_H_
 #define TRIGGERCONTROLLER_H_
 
+#include "Config.h"
+
 #include <Arduino.h>
+#ifdef SENSOR_ADPS
 #include <Adafruit_APDS9960.h>
-#include <Wire.h>
+#endif
+#ifdef SENSOR_VCNL
 #include "Adafruit_VCNL4010.h"
+#endif
+#include <Wire.h>
 
 #define RUNNING_AVERAGE_TICKS 10
 
@@ -24,10 +30,14 @@ private:
 		uint32_t cooldownMillis = 0;
 	};
 	ColorData color;
+#ifdef SENSOR_ADPS
 	Adafruit_APDS9960 apds;
+#endif
+#ifdef SENSOR_VCNL
 	Adafruit_VCNL4010 vcnl;
-	uint32_t averageLightLevel = 50;
-	uint16_t lightLevelTreshold = 50;
+#endif
+	uint32_t averageLightLevel = 35;
+	uint16_t lightLevelTreshold = 35;
 	TriggerData lightTrigger;
 	TriggerData proximityNormalTrigger;
 	TriggerData proximityTrollTrigger;
